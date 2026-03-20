@@ -80,12 +80,4 @@ if st.button('Calculate BMI', use_container_width=True):
 
 st.divider()
 st.caption('BMI Calculator — built with Streamlit')
-```
 
----
-
-Also update your `requirements.txt` to just:
-```
-streamlit
-matplotlib
-numpy
