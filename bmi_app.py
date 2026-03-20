@@ -1,5 +1,4 @@
 import streamlit as st
-import plotly.graph_objects as go
 
 st.title('BMI Calculator')
 st.write('Enter your height and weight below to calculate your BMI.')
@@ -17,24 +16,12 @@ if st.button('Calculate BMI', use_container_width=True):
     height_m = height / 100
     bmi = weight / (height_m ** 2)
 
-    # Gauge chart
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=bmi,
-        gauge={
-            'axis': {'range': [0, 40]},
-            'bar': {'color': 'green' if bmi < 25 else 'red'},
-            'steps': [
-                {'range': [0, 18.5], 'color': '#d6eaf8'},
-                {'range': [18.5, 25], 'color': '#d5f5e3'},
-                {'range': [25, 30], 'color': '#fdebd0'},
-                {'range': [30, 40], 'color': '#fadbd8'}
-            ],
-        },
-        title={'text': 'Your BMI'}
-    ))
-    fig.update_layout(height=300)
-    st.plotly_chart(fig, use_container_width=True)
+    # Display BMI
+    st.subheader(f'Your BMI is {bmi:.1f}')
+
+    # Progress bar as visual indicator
+    bmi_normalised = min(bmi / 40, 1.0)
+    st.progress(bmi_normalised)
 
     st.divider()
 
@@ -48,18 +35,18 @@ if st.button('Calculate BMI', use_container_width=True):
     else:
         st.error('Obese — please consult a doctor for guidance')
 
-
-
     st.divider()
 
-    #summary columns 
-    col1, col2 ,col3 = st.columns(3)
+    # Summary columns
+    col1, col2, col3 = st.columns(3)
     col1.metric('Height', f'{height} cm')
     col2.metric('Weight', f'{weight} kg')
     col3.metric('BMI', f'{bmi:.1f}')
 
-
-
 st.divider()
-st.caption('BMI Calculator- built with streamlit')
+st.caption('BMI Calculator — built with Streamlit')
+```
 
+Also update your `requirements.txt` to just:
+```
+streamlit
